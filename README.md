@@ -32,7 +32,7 @@ This project implements a **Decentralized Autonomous Organization (DAO)** using 
 
 ## Prerequisites
 
-  **Foundry**: Install Foundry by running:
+**Foundry**: Install Foundry by running:
   ```bash
   curl -L https://foundry.paradigm.xyz | bash
   foundryup
@@ -42,34 +42,34 @@ This project implements a **Decentralized Autonomous Organization (DAO)** using 
 
 ## Setup
 
-1. **Clone the Repository:**
-```bash
-git clone https://github.com/your-repo/simple-DAO.git
-cd simple-DAO
-```
+**1. Clone the Repository:**
+  ```bash
+  git clone https://github.com/serEMir/simple-DAO.git
+  cd simple-DAO
+  ```
 
-2. **Install Dependencies:**
-```bash
-forge install
-```
+**2. Install Dependencies:**
+  ```bash
+  forge install
+  ```
 
-3. **Set Up Environment Variables: Create a `.env` file in the root directory and add the following:**
-```bash
-SEPOLIA_RPC_URL=<your-sepolia-rpc-url>
-ETHERSCAN_API_KEY=<your-etherscan-api-key>
-ACCOUNT=<your-key-store-account-name>
-```
-see **Deployment** for how to encrypt your private key in a key store
+**3. Set Up Environment Variables: Create a `.env` file in the root directory and add the following:**
+  ```bash
+  SEPOLIA_RPC_URL=<your-sepolia-rpc-url>
+  ETHERSCAN_API_KEY=<your-etherscan-api-key>
+  ACCOUNT=<your-key-store-account-name>
+  ```
+  - see **Deployment** for how to encrypt your private key in a key store
 
-4. **Build the Project:**
-```bash
-forge build
-```
+**4. Build the Project:**
+  ```bash
+  forge build
+  ```
 
-5. **Run Test:**
-```bash
-forge test
-```
+**5. Run Test:**
+  ```bash
+  forge test
+  ```
 
 ---
 
@@ -77,7 +77,7 @@ forge test
 
 To deploy the DAO contract to the Sepolia testnet:
 
-- Ensure your .env file is correctly configured(rpc-url, API keys, keystore-accounts):
+- Ensure your `.env` file is correctly configured(rpc-url, API keys, keystore-accounts):
   - you can Encrypt a Private Key -> a keystore by:
     ```bash
     cast wallet import <your-account-name> --interactive
@@ -87,11 +87,11 @@ To deploy the DAO contract to the Sepolia testnet:
   make deploy-sepolia
   ```
 
-  ---
+---
 
-  ## Contract Overview
+## Contract Overview
 
-  **DAO Contract (`src/DAO.sol`)**
+**DAO Contract (`src/DAO.sol`)**
 
 **Key Functions:**
 
