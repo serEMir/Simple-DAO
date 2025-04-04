@@ -2,6 +2,7 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+test = "test/unit"
 
 # Monad Configuration
 eth-rpc-url="https://testnet-rpc.monad.xyz"

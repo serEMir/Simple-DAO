@@ -1,135 +1,109 @@
-## Foundry-Monad
+# Simple DAO Project
 
-> [!NOTE]  
-> In this foundry template the default chain is `monadTestnet`, if you wish to change it change the network in `foundry.toml`
+This project implements a **Decentralized Autonomous Organization (DAO)** using Solidity. The DAO allows contributors to pool funds, create proposals, vote on them, and execute proposals if a quorum is met. It is designed to be deployed on Ethereum-compatible blockchains.
 
-<h4 align="center">
-  <a href="https://docs.monad.xyz">Monad Documentation</a> | <a href="https://book.getfoundry.sh/">Foundry Documentation</a> | 
-   <a href="https://github.com/monad-developers/foundry-monad/issues">Report Issue</a>
-</h4>
+## Features
 
-_Foundry-Monad is a Foundry template with Monad configuration. So developers don't have to do the initial configuration in Foundry for Monad network._
+- **Contribution System**: Contributors can deposit ETH to gain shares in the DAO.
+- **Proposal Creation**: Only the owner can create proposals for fund allocation.
+- **Voting Mechanism**: Contributors can vote on proposals based on their shares.
+- **Quorum Enforcement**: Proposals are executed only if the quorum is met.
+- **Share Redemption**: Contributors can redeem their shares for ETH, if Contribution is still ongoing for that DAO cycle.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+---
 
-Foundry consists of:
+## Project Structure
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+### 1. **Contracts**
+- **`src/DAO.sol`**: The main DAO contract that handles contributions, proposals, voting, and fund management.
 
-## Requirements
+### 2. **Scripts**
+- **`script/DeployDAO.s.sol`**: A deployment script for deploying the DAO contract using Foundry.
 
-Before you begin, you need to install the following tools:
+### 3. **Tests**
+- **`test/unit/DAOTest.t.sol`**: Unit tests for the DAO contract.
+- **`test/integration/DAOInteractionsTest.t.sol`**: Integrations test to test the entire contract flow.
 
--   Rust
--   Cargo
--   [Foundryup](https://book.getfoundry.sh/getting-started/installation)
+### 4. **Configuration**
+- **`foundry.toml`**: Configuration file for Foundry, specifying paths and settings.
+- **`.env`**: Environment variables for deployment (e.g., RPC URLs, API keys, **NO PRIVATE KEYS!!!**).
 
-## Quickstart
+---
 
-To get started, follow the steps below:
+## Prerequisites
 
-1. You can either clone this repo using the below command:
+  **Foundry**: Install Foundry by running:
+  ```bash
+  curl -L https://foundry.paradigm.xyz | bash
+  foundryup
+  ```
 
-```sh
-git clone https://github.com/monad-developers/foundry-monad
+---
+
+## Setup
+
+1. **Clone the Repository:**
+```bash
+git clone https://github.com/your-repo/simple-DAO.git
+cd simple-DAO
 ```
 
-or
-
-You can do it manually using the below set of commands:
-
-```sh
-mkdir [project_name] && cd [project_name] && forge init --template monad-developers/foundry-monad
+2. **Install Dependencies:**
+```bash
+forge install
 ```
 
-The foundry project is now ready to be used!
-
-## Examples
-
-### Compile
-
-```shell
-forge compile
+3. **Set Up Environment Variables: Create a `.env` file in the root directory and add the following:**
+```bash
+SEPOLIA_RPC_URL=<your-sepolia-rpc-url>
+ETHERSCAN_API_KEY=<your-etherscan-api-key>
+ACCOUNT=<your-key-store-account-name>
 ```
+see **Deployment** for how to encrypt your private key in a key store
 
-### Build
-
-```shell
+4. **Build the Project:**
+```bash
 forge build
 ```
 
-### Test
-
-```shell
+5. **Run Test:**
+```bash
 forge test
 ```
 
-### Deploy and Verify
+---
 
-```shell
-forge create \
-  --private-key <your_private_key> \
-  src/Counter.sol:Counter \
-  --broadcast \
-  --verify \
-  --verifier sourcify \
-  --verifier-url https://sourcify-api-monad.blockvision.org
-```
+## Deployment
 
-### Deploy
+To deploy the DAO contract to the Sepolia testnet:
 
-```shell
-forge create --private-key <your_private_key> src/Counter.sol:Counter --broadcast
-```
+- Ensure your .env file is correctly configured(rpc-url, API keys, keystore-accounts):
+  - you can Encrypt a Private Key -> a keystore by:
+    ```bash
+    cast wallet import <your-account-name> --interactive
+    ```
+- Run the deployment script using the Makefile:
+  ```bash
+  make deploy-sepolia
+  ```
 
-### Verify Contract
+  ---
 
-```shell
-forge verify-contract \
-  <contract_address> \
-  src/Counter.sol:Counter \
-  --chain 10143 \
-  --verifier sourcify \
-  --verifier-url https://sourcify-api-monad.blockvision.org
-```
+  ## Contract Overview
 
-### Format
+  **DAO Contract (`src/DAO.sol`)**
 
-```shell
-forge fmt
-```
+**Key Functions:**
 
-### Gas Snapshots
+- `initializeDAO(uint256 _contributionTimeEnd, uint256 _voteTime, uint256 _quorum)`: Initializes the DAO with contribution and voting parameters.
+- `contribution()`: Allows contributors to deposit ETH and gain shares.
+- `redeemShare(uint256 amount)`: Redeems shares for ETH.
+- `createProposal(string description, uint256 amount, address recipient)`: Creates a proposal for fund allocation.
+- `voteProposal(uint256 proposalId)`: Allows contributors to vote on a proposal.
+- `executeProposal(uint256 proposalId)`: Executes a proposal if the quorum is met.
 
-```shell
-forge snapshot
-```
+---
 
-### Anvil
+## License
 
-```shell
-anvil
-```
-
-### Cast
-
-```shell
-cast <subcommand>
-```
-
-### Help
-
-```shell
-forge --help
-```
-
-```shell
-anvil --help
-```
-
-```shell
-cast --help
-```
+This project is licensed under the MIT License.
